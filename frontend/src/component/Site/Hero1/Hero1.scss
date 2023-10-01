@@ -1,0 +1,29 @@
+.common {
+    width: 100%;
+    height: 600px;
+    background-image: url(Runway-Models-Nedir-Runway-Model-Nasil-Olunur.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    background-attachment: fixed;
+  
+    &__hero1 {
+      width: 100%;
+      height: 600px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.505);
+  
+      &__slider {
+        width: 800px;
+        height: 200px;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: larger;
+        font-family: 'Times New Roman', Times, serif;
+      }
+    }
+  }
+  

@@ -1,0 +1,82 @@
+.Hero__Card{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 60px 80px;
+
+&__right{
+  width: 140px;
+
+}
+&__left{
+  ul{
+  list-style: none;
+ 
+  display: flex;
+  gap: 20px;
+  color: lightgrey;
+font-size: 18px;
+  }
+}
+}
+
+
+hr{
+  width: 90%;
+  color: lightgrey;
+
+}
+
+
+.card {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+
+
+
+  &__one {
+    width: 230px;
+   height: auto;
+    padding: 20px;
+    background-color: rgba(233, 212, 255, 0.603);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 20px;
+    &:hover {
+      transform: scale(1.05);
+    }
+    .card__one__img{
+      img{
+        border-radius: 10px;
+      }
+    }
+    &__top {
+      display: flex;
+      justify-content: space-between;
+
+      .card__one__top__fav {
+        color: red;
+        cursor: pointer;
+      }
+
+      .card__one__top__shop {
+        button {
+          height: 25px;
+          border: none;
+          background-color: rgb(227, 61, 196);
+          color: white;
+          font-weight: 600;
+          border-radius: 10px;
+        }
+
+        button:hover {
+          background-color: rgb(255, 255, 255);
+          color: rgb(227, 61, 196);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

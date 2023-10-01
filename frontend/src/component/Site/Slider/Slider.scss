@@ -1,0 +1,41 @@
+/* Slider.scss */
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    margin-top: 40px;
+  }
+  
+  .carousel {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .slide {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    opacity: 0.5;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+  
+  /* Medya sorguları */
+  @media (max-width: 1250px) {
+    .carousel {
+      flex-direction: column;
+    }
+  
+    .slide {
+      width: 100%; /* Tam genişlikte */
+      height: auto;
+      margin-bottom: 10px;
+    }
+  }
+  
