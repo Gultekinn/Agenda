@@ -54,4 +54,56 @@ gap: 40px;
       display: block;
     }
   }
-  
+  /* ... Mevcut CSS stilleri ... */
+
+/* Yandan açılan menü için CSS stil tanımları */
+.right-menu {
+  position: fixed;
+  top: 0;
+  right: -250px; /* Menü başlangıçta sağda görünmez olacak */
+  background-color: rgba(202, 57, 238, 0.741); /* Mevcut arka plan rengi */
+  width: 250px;
+  height: 100%;
+  padding-top: 80px;
+  z-index: 999; /* Navbar'ın üstünde görüntülenmesini sağlar */
+  transition: right 0.3s ease; /* Geçiş efekti ekleyin */
+}
+
+.right-menu.open {
+  right: 0; /* Menüyü açıkken sağa doğru kaydırın */
+}
+
+.right-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-menu ul li {
+  margin-bottom: 20px;
+}
+
+.right-menu a {
+  text-decoration: none;
+  color: white; /* Mevcut metin rengi */
+  font-weight: 600; /* Mevcut metin font-weight */
+}
+
+.right-menu a:hover {
+  color: #007bff; /* Mevcut metin hover rengi */
+}
+
+/* Kapatma düğmesi için stil */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  z-index: 1000;
+}

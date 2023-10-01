@@ -1,0 +1,26 @@
+/* Home.scss veya ilgili stil dosyanıza ekleyin */
+.scrollable-content {
+    /* İçerik sınıfının stil kuralları burada olabilir */
+  }
+  
+  .scroll-to-top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #65099a;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .scroll-to-top-button:hover {
+    background-color: #1b0981;
+  }
+  
