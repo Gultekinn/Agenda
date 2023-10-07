@@ -25,6 +25,17 @@
     }
   }
   &__left{
+    &__icon{
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      button{
+        color: white;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
 display: flex;
 align-items: center;
 gap: 40px;
@@ -32,6 +43,7 @@ gap: 40px;
       color: white;
       background-color: transparent;
       border: none;
+      cursor: pointer;
      
     }
   }
@@ -61,7 +73,7 @@ gap: 40px;
   position: fixed;
   top: 0;
   right: -250px; /* Menü başlangıçta sağda görünmez olacak */
-  background-color: rgba(202, 57, 238, 0.741); /* Mevcut arka plan rengi */
+  background-color: rgb(202, 57, 238); /* Mevcut arka plan rengi */
   width: 250px;
   height: 100%;
   padding-top: 80px;
@@ -95,15 +107,31 @@ gap: 40px;
   color: #007bff; /* Mevcut metin hover rengi */
 }
 
+
+
 /* Kapatma düğmesi için stil */
 .close-button {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px; /* Sol üst köşede olacak */
   background: transparent;
   border: none;
   cursor: pointer;
   color: white;
   font-size: 24px;
   z-index: 1000;
+}
+
+/* ... Diğer CSS stilleri ... */
+
+#menuicon{
+  background-color:transparent;
+  border: none;
+  cursor: pointer;
+}
+#closemenu{
+  background-color:transparent;
+  border: none; 
+  color: white;
+  cursor: pointer;
 }

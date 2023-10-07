@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../Card/Card.scss"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import axios from "axios";
+
 const Card = () => {
+  const [data,setData]=useState([])
+  useEffect(()=>{
+    axios.get("http://localhost:7075/cards").then((res)=>{
+      setData(res.data)
+    })
+  })
   return (
     <>
     <div className="Hero__Card">
@@ -20,12 +28,16 @@ const Card = () => {
     </div>
     <hr />
      <div className="card">
+      {data.map((item,index)=>(
         <div className="card__one">
             <div className="card__one__img">
-             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEkIdLD_5fl0npHATg0b-DiADjiYCSLvTW4Q1PqSPFTQ&s" alt="" />
+            <img
+                src={`http://localhost:7075/public/${item.mainimage}`}
+                alt="img"
+              />
             </div>
-            <h1>Name</h1>
-            <p>Price</p>
+            <h1>{item.title}</h1>
+            <p>{item.price}tl</p>
             <div className="card__one__top">
                 <div className="card__one__top__fav">
                     <FavoriteBorderIcon/> 
@@ -37,6 +49,8 @@ const Card = () => {
             </div>
 
         </div>
+      ))}
+        
         </div> 
     </>
   )

@@ -4,7 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close';
 import '../Header/Header.scss';
 
 const Header = () => {
@@ -19,6 +19,7 @@ const Header = () => {
       <div className={`navbar ${isMenuOpen ? 'open' : ''}`}>
         <div className="navbar__logo">
           <img src="https://preview.colorlib.com/theme/agenda/images/logo.png" alt="" />
+          
         </div>
 
         <div className={`navbar__left ${isMenuOpen ? 'open' : ''}`}>
@@ -37,31 +38,32 @@ const Header = () => {
         </div>
 
         <div className="navbar__left__hamburger">
-          <button id="menuicon" onClick={toggleMenu}><MenuIcon /></button>
+          {isMenuOpen ? (
+            <button id="menuicon" onClick={toggleMenu}><CloseIcon /></button>
+          ) : (
+            <button id="menuicon" onClick={toggleMenu}><MenuIcon /></button>
+          )}
         </div>
       </div>
 
-     {/* Kapatma düğmesi */}
-{isMenuOpen && (
-  <button className="close-button" onClick={toggleMenu}>
-    <CloseIcon />
-  </button>
-)}
-
-{/* Yandan açılan menü */}
-{isMenuOpen && (
-  <div className={`right-menu ${isMenuOpen ? 'open' : ''}`}>
-    <ul>
-      <li><Link to=""><PersonIcon /> Ana sayfa</Link></li>
-      <li><Link to="about"><FavoriteBorderIcon /> Hakkında</Link></li>
-      <li><Link to="events"><ShoppingCartIcon /> Hizmetler</Link></li>
-      <li><Link to="news"><MenuIcon /> Projeler</Link></li>
-      <li><Link to="contact"><MenuIcon /> İletişim</Link></li>
-    </ul>
-  </div>
-)}
-
-
+      {/* Yandan açılan menü */}
+      {isMenuOpen && (
+        <div className={`right-menu ${isMenuOpen ? 'open' : ''}`}>
+          <ul>
+            <li><Link to="">Ana sayfa</Link></li>
+            <li><Link to="about">Hakkında</Link></li>
+            <li><Link to="events"> Hizmetler</Link></li>
+            <li><Link to="news">Projeler</Link></li>
+            <li><Link to="contact">İletişim</Link></li>
+            <li><div className="navbar__left__icon">
+            <Link to="login"><button><PersonIcon /></button></Link>
+            <Link to="favorite"><button><FavoriteBorderIcon /></button></Link>
+            <Link to="basket"><button><ShoppingCartIcon /></button></Link>
+          </div></li>
+            <li className="close-button"><button id='closemenu' onClick={toggleMenu}><CloseIcon /></button></li>
+          </ul>
+        </div>
+      )}
     </>
   );
 }
