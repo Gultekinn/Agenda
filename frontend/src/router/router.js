@@ -2,6 +2,7 @@ import SiteRoot from "../SiteRoute/SiteRoot";
 import About from "../pages/Site/About/About";
 import Basket from "../pages/Site/Basket/Basket";
 import Contact from "../pages/Site/Contact/Contact";
+import Detail from "../pages/Site/Detail/Detail";
 import Events from "../pages/Site/Events/Events";
 import Favorite from "../pages/Site/Favorite/Favorite";
 import Home from "../pages/Site/Home/Home";
@@ -49,6 +50,10 @@ export const ROUTES = [
       {
         path:'register',
         element:<Register/>
+      },
+      {
+        path:'/:id',
+        element:<Detail/>
       }
     ],
   },

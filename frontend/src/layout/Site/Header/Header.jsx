@@ -18,7 +18,7 @@ const Header = () => {
     <>
       <div className={`navbar ${isMenuOpen ? 'open' : ''}`}>
         <div className="navbar__logo">
-          <img src="https://preview.colorlib.com/theme/agenda/images/logo.png" alt="" />
+          <img src="https://cdn.freelogodesign.org/files/c6abbfca984f48c3942b036ac2477053/thumb/logo_200x200.png?v=0" alt="" />
           
         </div>
 
