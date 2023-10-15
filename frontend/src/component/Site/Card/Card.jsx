@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../Card/Card.scss";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { MainContext } from '../../../Context/Context';
 
 const Card = () => {
+  const { basketItem, setBasketItem } = useContext(MainContext);
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -15,7 +17,25 @@ const Card = () => {
       .catch((error) => {
         console.error("Veri alımı sırasında bir hata oluştu:", error);
       });
-  }, []); // Boş bağımlılık dizisi, sadece bileşen yüklendiğinde çalışmasını sağlar.
+  }, []);
+
+  const addToBasket = (item) => {
+    const existingItem = basketItem.find((basketItem) => basketItem._id === item._id);
+    
+    if (existingItem) {
+      // Eğer ürün zaten sepette ise sadece miktarını artır
+      const updatedBasket = basketItem.map((basketItem) => {
+        if (basketItem._id === item._id) {
+          return { ...basketItem, quantity: basketItem.quantity + 1 };
+        }
+        return basketItem;
+      });
+      setBasketItem(updatedBasket);
+    } else {
+      // Ürün sepette yoksa ekleyin ve miktarını 1 olarak ayarlayın
+      setBasketItem([...basketItem, { ...item, quantity: 1 }]);
+    }
+  };
 
   return (
     <>
@@ -35,26 +55,24 @@ const Card = () => {
       <hr />
       <div className="card">
         {data.map((item, index) => (
-          <Link to={`/${item._id}`} key={item._id}>
-            <div className="card__one">
-              <div className="card__one__img">
-                <img
-                  src={`http://localhost:7075/public/${item.mainimage}`}
-                  alt="img"
-                />
+          <div className="card__one" key={item._id}>
+            <div className="card__one__img">
+              <img
+                src={`http://localhost:7075/public/${item.mainimage}`}
+                alt="img"
+              />
+            </div>
+            <h1>{item.title}</h1>
+            <p>{item.price}tl</p>
+            <div className="card__one__top">
+              <div className="card__one__top__fav">
+                <FavoriteBorderIcon/>
               </div>
-              <h1>{item.title}</h1>
-              <p>{item.price}tl</p>
-              <div className="card__one__top">
-                <div className="card__one__top__fav">
-                  <FavoriteBorderIcon/>
-                </div>
-                <div className="card__one__top__shop">
-                  <button id='C' >Sepete ekle</button>
-                </div>
+              <div className="card__one__top__shop">
+                <button id='btn1' onClick={() => addToBasket(item)}>Sepete ekle</button>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </>

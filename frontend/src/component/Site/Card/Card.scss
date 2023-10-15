@@ -1,81 +1,99 @@
-.Hero__Card{
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 60px 80px;
+/* Define the elite color */
+$eliteColor: #ffcc00; /* You can replace this with your preferred elite color */
 
-&__right{
-  width: 140px;
-
-}
-&__left{
-  ul{
-  list-style: none;
- 
+.Hero__Card {
   display: flex;
-  gap: 20px;
-  color: lightgrey;
-font-size: 18px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  &__right {
+    width: 140px;
+    color: $eliteColor; /* Apply elite color to text */
+  }
+
+  &__left {
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      color: $eliteColor; /* Apply elite color to text */
+      font-size: 18px;
+    }
   }
 }
-}
 
-
-hr{
+hr {
   width: 90%;
-  color: lightgrey;
-
+  color: $eliteColor; /* Apply elite color to the line */
+  margin: 0 auto;
 }
-
 
 .card {
-  padding: 20px 20px;
   display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
-  gap: 30px;
+  padding: 50px 0;
+}
 
-cursor: pointer;
+.card__one {
+  width: 230px;
+  height: auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 
-  &__one {
-    width: 230px;
-   height: auto;
-    padding: 20px;
-    background-color: rgba(233, 212, 255, 0.603);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition: transform 0.3s ease-in-out;
-    border-radius: 20px;
-    &:hover {
-      transform: scale(1.05);
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .card__one__img {
+    img {
+      width: 100%;
+      height: 200px; /* Set a fixed height for all images (adjust as needed) */
+      object-fit: cover; /* Maintain image aspect ratio and crop if necessary */
+      border-radius: 10px;
     }
-    .card__one__img{
-      img{
+  }
+
+  h1 {
+    font-size: 18px;
+    color: $eliteColor; /* Apply elite color to the title */
+  }
+
+  p {
+    font-size: 16px;
+    color: $eliteColor; /* Apply elite color to the price */
+  }
+
+  .card__one__top {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    .card__one__top__fav {
+      color: $eliteColor; /* Apply elite color to the favorite icon */
+      cursor: pointer;
+    }
+
+    .card__one__top__shop {
+      button {
+        height: 30px; /* Adjust the button height */
+        border: none;
+        background-color: $eliteColor; /* Apply elite color to the button background */
+        color: white;
+        font-weight: 600;
         border-radius: 10px;
-      }
-    }
-    &__top {
-      display: flex;
-      justify-content: space-between;
-
-      .card__one__top__fav {
-        color: red;
         cursor: pointer;
       }
 
-      .card__one__top__shop {
-        button {
-          height: 25px;
-          border: none;
-          background-color: rgb(227, 61, 196);
-          color: white;
-          font-weight: 600;
-          border-radius: 10px;
-        }
-
-        button:hover {
-          background-color: rgb(255, 255, 255);
-          color: rgb(227, 61, 196);
-          cursor: pointer;
-        }
+      button:hover {
+        background-color: #fff; /* White background on hover */
+        color: $eliteColor; /* Apply elite color to the button text on hover */
       }
     }
   }

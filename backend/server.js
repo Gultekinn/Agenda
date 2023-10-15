@@ -15,7 +15,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 const path = require('path')
 const uploadPath=path.join(__dirname,'public')
 app.use('/public',express.static(uploadPath))
-mongoose.connect("mongodb+srv://zoomcuk32:mongodb2003@cluster0.alamwma.mongodb.net/").then(()=>{
+mongoose.connect("mongodb+srv://zoomcuk32:gultekin03@cluster0.alamwma.mongodb.net/").then(()=>{
     console.log("connected")
 })
 

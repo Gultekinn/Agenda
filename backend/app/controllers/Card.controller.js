@@ -31,7 +31,7 @@ const cardController = {
   edit: async (req, res) => {
     const { id } = req.params;
     const { title,price } = req.body;
-    //! const mainImageFile = req.files["mainimage"];
+     const mainImageFile = req.files["mainimage"];
 
     try {
       const card = await Card.findById(id);
@@ -44,9 +44,9 @@ const cardController = {
       card.title = title;
       card.price = price;
       //Update the mainImage if uploaded
-      //! if (mainImageFile) {
-      //  ! card.mainimage = mainImageFile[0].filename;
-      // }
+    if (mainImageFile) {
+        card.mainimage = mainImageFile[0].filename;
+      }
 
     
       // Save the updated card
