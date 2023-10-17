@@ -3,6 +3,7 @@ import "../Card/Card.scss";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import axios from "axios";
 import { MainContext } from '../../../Context/Context';
+import { Link } from 'react-router-dom';
 
 const Card = () => {
   const { basketItem, setBasketItem } = useContext(MainContext);
@@ -55,12 +56,15 @@ const Card = () => {
       <hr />
       <div className="card">
         {data.map((item, index) => (
-          <div className="card__one" key={item._id}>
+          <div className="card__one" key={index}>
             <div className="card__one__img">
+              <Link to={`${item._id}`}>              
               <img
                 src={`http://localhost:7075/public/${item.mainimage}`}
                 alt="img"
               />
+              </Link>
+
             </div>
             <h1>{item.title}</h1>
             <p>{item.price}tl</p>
