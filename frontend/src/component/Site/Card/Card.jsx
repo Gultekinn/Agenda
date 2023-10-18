@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Card = () => {
   const { basketItem, setBasketItem } = useContext(MainContext);
-
+const{favorItem,SetFavorItem}=useContext(MainContext)
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -20,6 +20,8 @@ const Card = () => {
       });
   }, []);
 
+  const addToFavor = (item) => {
+    const existingItem = favorItem.find((favortItem) => favorItem._id === item._id);}
   const addToBasket = (item) => {
     const existingItem = basketItem.find((basketItem) => basketItem._id === item._id);
     
@@ -70,7 +72,8 @@ const Card = () => {
             <p>{item.price}tl</p>
             <div className="card__one__top">
               <div className="card__one__top__fav">
-                <FavoriteBorderIcon/>
+                <button id='btnnn' onClick={() => {
+                    SetFavorItem([...favorItem, item])}}><FavoriteBorderIcon id='icona'/></button>
               </div>
               <div className="card__one__top__shop">
                 <button id='btn1' onClick={() => addToBasket(item)}>Sepete ekle</button>

@@ -6,10 +6,15 @@ import { MainContext } from './Context/Context';
 
 function App() {
   const[basketItem,setBasketItem]=useState([])
+  const[favorItem,SetFavorItem]=useState([])
   const datas={
     basketItem,
-    setBasketItem
+    setBasketItem,
+    favorItem,
+    SetFavorItem
+
   }
+  
   const router=createBrowserRouter(ROUTES)
   return (
     <div className="App">
