@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./Detail.scss";
+import { MainContext } from "../../../Context/Context";
 
 const Detail = () => {
   const { id } = useParams();
   const [item, setData] = useState({});
-
+  const { basketItem, setBasketItem } = useContext(MainContext);
+  const { favorItem, setFavorItem } = useContext(MainContext);
+  
   useEffect(() => {
     axios.get(`http://localhost:7075/cards/${id}`).then((res) => {
       setData(res.data);
     });
   });
-
+// !const addToFavor = (item) => {
+// !    const existingItem = favorItem.find((favortItem) => favorItem._id === item._id);}
   return (
     <div className="container">
       <div className="image">
@@ -21,8 +25,9 @@ const Detail = () => {
       <div className="details">
         <h1 className="detail_h">{item.title}</h1>
         <p className="detail_p">{item.price}tl</p>
-        <button>Add to Cart</button>
-        <button>Like</button>
+        <button>Sepete ekle</button>
+        <button  onClick={() => {
+                    setFavorItem([...favorItem, item])}}>Favorilere ekle</button>
       </div>
     </div>
   );

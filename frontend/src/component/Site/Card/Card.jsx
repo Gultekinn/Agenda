@@ -1,17 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import "../Card/Card.scss";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import axios from "axios";
-import { MainContext } from '../../../Context/Context';
-import { Link } from 'react-router-dom';
+import { MainContext } from "../../../Context/Context";
+import { Link } from "react-router-dom";
 
 const Card = () => {
   const { basketItem, setBasketItem } = useContext(MainContext);
-const{favorItem,SetFavorItem}=useContext(MainContext)
+  const { favorItem, setFavorItem } = useContext(MainContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:7075/cards")
+    axios
+      .get("http://localhost:7075/cards")
       .then((res) => {
         setData(res.data);
       })
@@ -20,11 +22,24 @@ const{favorItem,SetFavorItem}=useContext(MainContext)
       });
   }, []);
 
+  const isFavorited = (item) =>
+    favorItem.some((favItem) => favItem._id === item._id);
+
   const addToFavor = (item) => {
-    const existingItem = favorItem.find((favortItem) => favorItem._id === item._id);}
+    if (isFavorited(item)) {
+      // Eğer ürün favorilerde ise, bu ürünü favorilerden kaldır
+      setFavorItem(favorItem.filter((favItem) => favItem._id !== item._id));
+    } else {
+      // Ürün favorilerde değilse, bu ürünü favorilere ekle
+      setFavorItem([...favorItem, item]);
+    }
+  };
+
   const addToBasket = (item) => {
-    const existingItem = basketItem.find((basketItem) => basketItem._id === item._id);
-    
+    const existingItem = basketItem.find(
+      (basketItem) => basketItem._id === item._id
+    );
+
     if (existingItem) {
       // Eğer ürün zaten sepette ise sadece miktarını artır
       const updatedBasket = basketItem.map((basketItem) => {
@@ -60,23 +75,29 @@ const{favorItem,SetFavorItem}=useContext(MainContext)
         {data.map((item, index) => (
           <div className="card__one" key={index}>
             <div className="card__one__img">
-              <Link to={`${item._id}`}>              
-              <img
-                src={`http://localhost:7075/public/${item.mainimage}`}
-                alt="img"
-              />
+              <Link to={`${item._id}`}>
+                <img
+                  src={`http://localhost:7075/public/${item.mainimage}`}
+                  alt="img"
+                />
               </Link>
-
             </div>
             <h1>{item.title}</h1>
             <p>{item.price}tl</p>
             <div className="card__one__top">
               <div className="card__one__top__fav">
-                <button id='btnnn' onClick={() => {
-                    SetFavorItem([...favorItem, item])}}><FavoriteBorderIcon id='icona'/></button>
+                <button id="btnnn" onClick={() => addToFavor(item)}>
+                  {isFavorited(item) ? (
+                    <FavoriteIcon id="icona" color="error" /> // Red heart icon when favorited
+                  ) : (
+                    <FavoriteBorderIcon  id="icona"/> // Default heart icon when not favorited
+                  )}
+                </button>
               </div>
               <div className="card__one__top__shop">
-                <button id='btn1' onClick={() => addToBasket(item)}>Sepete ekle</button>
+                <button id="btn1" onClick={() => addToBasket(item)}>
+                  Sepete ekle
+                </button>
               </div>
             </div>
           </div>
@@ -84,6 +105,6 @@ const{favorItem,SetFavorItem}=useContext(MainContext)
       </div>
     </>
   );
-}
+};
 
 export default Card;
