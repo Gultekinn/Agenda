@@ -1,9 +1,31 @@
 import React, { useContext, useEffect } from "react";
 import { MainContext } from "../../../Context/Context";
-
+import "../Favorite/Favorite.scss"
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const Favorite = () => {
   const { favorItem, setFavorItem } = useContext(MainContext);
+  const { basketItem, setBasketItem } = useContext(MainContext);
 
+  const addToBasket = (item) => {
+    const existingItem = basketItem.find(
+      (basketItem) => basketItem._id === item._id
+    );
+
+    if (existingItem) {
+      // Eğer ürün zaten sepette ise sadece miktarını artır
+      const updatedBasket = basketItem.map((basketItem) => {
+        if (basketItem._id === item._id) {
+          return { ...basketItem, quantity: basketItem.quantity + 1 };
+        }
+        return basketItem;
+      });
+      setBasketItem(updatedBasket);
+    } else {
+      // Ürün sepette yoksa ekleyin ve miktarını 1 olarak ayarlayın
+      setBasketItem([...basketItem, { ...item, quantity: 1 }]);
+    }
+  };
   return (
     <div>
       {favorItem.map((item, index) => {
@@ -17,7 +39,7 @@ const Favorite = () => {
             <div className="item-details">
               <h2>{item.title}</h2>
               <p>Fiyat: {item.price}tl</p>
-              <button
+              <button id="comercIcon"
                 onClick={() => {
                   const deleteItem = favorItem.filter(
                     (item) => item.id != item._id
@@ -30,8 +52,9 @@ const Favorite = () => {
                   }
                 }}
               >
-                Favorilerden kaldır
+                <DeleteIcon/>
               </button>
+              <button id="comercIcon" onClick={() => addToBasket(item)}><ShoppingCartIcon/></button>
             </div>
           </div>
         );

@@ -44,6 +44,13 @@
     cursor: pointer;
     margin-right: 10px;
   }
+  #btnnn {
+    background-color: transparent;
+    border: none;
+    #icona {
+      color: red;
+    }
+  }
   
   /* Responsive design for smaller screens */
   @media (max-width: 768px) {
