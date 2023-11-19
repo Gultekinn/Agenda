@@ -1,4 +1,9 @@
 import SiteRoot from "../SiteRoute/SiteRoot";
+import Content from "../component/Admin/Content/Content";
+import AdminRoot from "../pages/Admin/AdminRoot/AdminRoot";
+import CardData from "../pages/Admin/CardData/CardData";
+import DashBoard from "../pages/Admin/DashBoard/DashBoard";
+import UserTable from "../pages/Admin/UserTable/UserTable";
 import About from "../pages/Site/About/About";
 import Basket from "../pages/Site/Basket/Basket";
 import Contact from "../pages/Site/Contact/Contact";
@@ -56,5 +61,32 @@ export const ROUTES = [
         element:<Detail/>
       }
     ],
+
   },
+{
+  path:'/admin',
+  element:<AdminRoot/>,
+ children:[
+{
+  path:"",
+  element:<DashBoard/>,
+
+},
+{
+  path:"",
+  element:<Content/>,
+  children:[
+    {
+      path:"carddata",
+      element:<CardData/>,
+    },
+   
+    {
+      path:"usertable",
+      element:<UserTable/>,
+    }
+  ]
+}
+ ]
+}
 ];
