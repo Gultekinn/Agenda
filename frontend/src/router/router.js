@@ -1,5 +1,5 @@
 import SiteRoot from "../SiteRoute/SiteRoot";
-import Content from "../component/Admin/Content/Content";
+import Content from "../layout/Admin/Content/Content";
 import AdminRoot from "../pages/Admin/AdminRoot/AdminRoot";
 import CardData from "../pages/Admin/CardData/CardData";
 import DashBoard from "../pages/Admin/DashBoard/DashBoard";
