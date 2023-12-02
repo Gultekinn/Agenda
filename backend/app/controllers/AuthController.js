@@ -1,3 +1,37 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const userModel = require('../models/UserModel')
+
+// Create Token
+const maxAge = 3 * 24 * 60 * 60;
+
+const createToken = (id) => {
+    return jwt.sign({ id }, "secret");
+};
+
+const handleErrors = (err) => {
+    let errors = { email: "", password: "" };
+
+    if (err.message === "User not found")
+        errors.email = "Email is not registered";
+
+    if (err.message === "Incorrect password")
+        errors.password = "Password is incorrect";
+
+    if (err.code === 11000) {
+        errors.email = "Email is already registered";
+        return errors;
+    }
+
+    if (err.message.includes("Users validation failed")) {
+        Object.values(err.errors).forEach(({ properties }) => {
+            errors[properties.path] = properties.message;
+        });
+    }
+    return errors;
+};
+
 module.exports.register = async (req, res) => {
     const { username, email, password, isAdmin } = req.body;
     try {
@@ -108,16 +142,22 @@ module.exports.getAdminUsers = async (req, res) => {
 };
   
 
-  module.exports.getUserById = async (req, res) => {
+module.exports.getUserById = async (req, res) => {
     const { id } = req.params;
     try {
       const user = await userModel.findById(id);
       if (!user) {
         throw new Error("User not found");
       }
-      res.status(200).json(user);
+  
+      // !Eğer user bulunduysa, user değeri null ya da undefined değilse,
+      // !isAdmin özelliğine erişilebilir. Bu kontrolü yapmak önemli.
+      const isAdmin = user.isAdmin !== undefined ? user.isAdmin : false;
+  
+      res.status(200).json({ user, isAdmin });
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: "An error occurred while retrieving the user" });
     }
   };
+  

@@ -1,71 +1,72 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import '../Register/Register.scss'
-import { useNavigate } from 'react-router-dom';
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
 const Register = () => {
-    const navigate = useNavigate();
-  const initialValues = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
-
-  const validationSchema = Yup.object({
-    name: Yup.string().required('Adınızı giriniz'),
-    email: Yup.string().email('Geçerli bir e-posta adresi girin').required('E-posta adresi zorunlu'),
-    password: Yup.string().required('Parola zorunlu'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Parolalar uyuşmuyor')
-      .required('Parola tekrarı zorunlu'),
-  });
-
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
-
+  
+  const navigate = useNavigate();
   return (
-    <div className="formm">
-        <div className="register-form">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <div className="form-group">
-            <label htmlFor="name">Adınız</label>
-            <Field type="text" id="name" name="name" />
-            <ErrorMessage name="name" component="div" className="error-message" />
-          </div>
+    <>
+ 
+     
+        <div className="register">
+                         
 
-          <div className="form-group">
-            <label htmlFor="email">E-posta Adresi</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" className="error-message" />
-          </div>
+          <Formik initialValues={{
+                username: "",
+                email: "",
+                password: ""
+              }}
+                //validation schema
+                validationSchema={Yup.object({
+                  username: Yup.string().required("Username is required!"),
+                  email: Yup.string()
+                    .email('Invalid email format')
+                    .required('Email is required'),
+                  password: Yup.string()
+                    .required('Password is required')
+                    .min(8, 'Password must be at least 8 characters long')
+                    .max(20, 'Password must not exceed 20 characters')
+                })}
 
-          <div className="form-group">
-            <label htmlFor="password">Parola</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" className="error-message" />
-          </div>
+                onSubmit={(values, { resetForm }) => {
+                  console.log(values);
+                  axios.post("http://localhost:7075/auth", values).then(res => {
+                  })
+                  navigate('/login')
+                  resetForm()
+                }}
+              >
+                {
+                  ({ values, handleSubmit, handleChange, handleBlur , dirty, touched, errors }) => (
+            
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Parola Tekrarı</label>
-            <Field type="password" id="confirmPassword" name="confirmPassword" />
-            <ErrorMessage name="confirmPassword" component="div" className="error-message" />
-          </div>
+                    <form id="form" onSubmit={handleSubmit}>
+                            <h1>Sign up</h1>
+                      <input className="inptt" type="text" placeholder='Username' id='username' value={values.username} onChange={handleChange} onBlur={handleBlur}/>
 
-          <button type="submit">Kayıt Ol</button>
-        </Form>
-      </Formik>
-    </div>
-    </div>
+                      <input  className="inptt" type="email" placeholder='Email' id='email' value={values.email} onChange={handleChange} onBlur={handleBlur}/>
+                      {touched.email && errors.email && (
+                        <div className='error-message'>{errors.email}</div>
+                      )}
+
+                      <input  className="inptt" type="password" placeholder='Password' id='password' value={values.password} onChange={handleChange} onBlur={handleBlur}/>
+                      {touched.password && errors.password && (
+                        <div className='error-message'>{errors.password}</div>
+                      )}
+
+                      <button type='submit' disabled={!dirty}>Submit</button>
+                    </form>
+                  )
+                }
+              </Formik>
+
+        </div>
+     
+
+    </>
   );
 };
 
 export default Register;
-

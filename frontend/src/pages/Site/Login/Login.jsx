@@ -1,70 +1,80 @@
-import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Button } from '@mui/material';
-import { Email, Facebook, Google } from '@mui/icons-material'; // İkonları içe aktardık
-import "../Login/Login.scss"
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
+
 const Login = () => {
-    const navigate = useNavigate()
-    const initialValues = {
-        email: '',
-        password: '',
-      };
-    
-      const validationSchema = Yup.object({
-        email: Yup.string().email('Geçerli bir e-posta adresi girin').required('E-posta adresi zorunlu'),
-        password: Yup.string().required('Parola zorunlu'),
-      });
-    
-      const handleSubmit = (values) => {
-        console.log(values); // Giriş işlemi burada gerçekleştirilebilir
-      };
+  const navigate = useNavigate()
 
-      return (
-        <div className="formm">
-            <div className="login-form">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+ 
+
+
+
+  return (
+    <>
+    
+     
+        <div className="login">
+          <Formik initialValues={{
+            email: "",
+            password: ""
+          }}
+            //validation schema
+            validationSchema={Yup.object({
+              email: Yup.string()
+                .email('Invalid email format')
+                .required('Email is required'),
+              password: Yup.string()
+                .required('Password is required')
+                .min(8, 'Password must be at least 8 characters long')
+                .max(20, 'Password must not exceed 20 characters')
+            })}
+
+            onSubmit={(values, { resetForm }) => {
+              console.log(values);
+              axios.post("http://localhost:7075/auth/login", values, {
+                withCredentials: true
+              }).then(res => {
+                console.log(res.data.data.isAdmin);
+                if (res.data.data.isAdmin === true) {
+                  console.log('admin');
+                  navigate('/admin')
+                }
+                else {
+                  navigate('/')
+                }
+              })
+              resetForm()
+            }}
           >
-            <Form>
-              <div className="form-group">
-                <label htmlFor="email">E-posta Adresi</label>
-                <Field type="email" id="email" name="email" />
-                <ErrorMessage name="email" component="div" className="error-message" />
-              </div>
-    
-              <div className="form-group">
-                <label htmlFor="password">Parola</label>
-                <Field type="password" id="password" name="password" />
-                <ErrorMessage name="password" component="div" className="error-message" />
-              </div>
-    
-              <button type="submit">Giriş Yap</button>
-            </Form>
+            {
+              ({ values, handleSubmit, handleChange, handleBlur, dirty, touched, errors }) => (
+                <form className="formm" onSubmit={handleSubmit}>
+                            <h1>Sign in</h1>
+
+                  <input className="input" type="email" placeholder='Email' id='email' value={values.email} onChange={handleChange} onBlur={handleBlur} />
+                  {touched.email && errors.email && (
+                    <div className="error-message">{errors.email}</div>
+                  )}
+
+                  <input className="input" type="password" placeholder='Password' id='password' value={values.password} onChange={handleChange} onBlur={handleBlur} />
+                  {touched.password && errors.password && (
+                    <div className="error-message">{errors.password}</div>
+                  )}
+                  <button className="btnnn" type='submit' disabled={!dirty}>Submit</button>
+                  <p className="forgot-password text-right">
+                    Don't have an account? <Link id="ln" onClick={() => navigate('/register')}>Register</Link>
+                  </p>
+                </form>
+              )
+            }
           </Formik>
-    
-          <div className="signup-link">
-            Henüz hesabınız yok mu? <Link onClick={() => navigate('/register')}>Kaydolun</Link>
-          </div>
-    
-          <div className="social-login">
-        {/* Google ile Devam Et düğmesine Google ikonunu ekledik */}
-        <Button className="google-login" startIcon={<Google />}>
-          Google ile Devam Et
-        </Button> 
-
-        {/* Facebook ile Devam Et düğmesine Facebook ikonunu ekledik */}
-        <Button className="facebook-login" startIcon={<Facebook />}>
-          Facebook ile Devam Et
-        </Button>
-      </div>
         </div>
-        </div>
-      );
-    
-}
+     
 
-export default Login
+    </>
+  );
+};
+
+export default Login;
